@@ -1,0 +1,99 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-info static-top fixed">
+  <div class="container">
+    <a class="navbar-brand" href="#">
+      <img src="assets/news.png" width="100px" height="40px" alt="">
+    </a>
+    <a class="navbar-brand" href="#">
+      <h4>NEWSAPI</h4>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/news">
+            <h5><i class="fa fa-home"></i>   Home</h5>
+          </a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" routerLink="/searchHistory">
+           <h5> <i class="fa fa-search"></i>  Search History</h5>
+          </a>
+        </li>
+        <li class="nav-item">
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" style="cursor:pointer" (click)="logout()">
+            <h5><i class="fa fa-sign-out"></i>  Logout</h5>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<div class="row justify-content-center">
+  <div class="col-md-10">
+    <h2 class="row justify-content-center mt-4 mb-5"><b> Search History Details</b></h2>
+    <div *ngIf="searchhistory; else nosearchistory">
+      <div class="row justify-content-center ">
+        <h3>No previous searches</h3>
+      </div>
+    </div>
+
+    <ng-template #nosearchistory>
+
+      <!-- <table class="table table-striped">
+        <thead>
+          <tr>
+            <th class="hidden">Id</th>
+            <th>Searched Keyword</th>
+            <th>Date</th>
+
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let a of searchHistory let i=index">
+            <td class="hidden">{{i+1}}</td>
+            <td id="viewsearchhistory">{{a.keyword}}</td>
+            <td>{{a.creationDate}}</td>
+
+            <td><button class="btn btn-danger" id="{{a.keyword}}" (click)="deleteSearch(a.sid)"> Delete</button>
+          </tr>
+        </tbody>
+      </table> -->
+
+      <div class="container-fluid">
+        <div class="row  mt-4">
+          <div class=" col-lg-4 mb-3" *ngFor="let a of searchHistory let i=index">
+            <div class="card">
+            <div class="card">
+              <div class="card-header">
+              <h4>{{i+1}}   <h5  style="float: right;">{{a.creationDate}}</h5></h4>
+            
+            </div>
+              <div class="card-body row justify-content-center">
+                <p style="font-size:30px;" id="viewsearchhistory">
+                    <i class="fa fa-search"></i> {{a.keyword}}
+                </p>
+              </div>
+              <div class="card-footer" id="footer">
+                <button class="btn btn-danger" id="{{a.keyword}}" (click)="deleteSearch(a.sid)" style="float: right;">
+                  Delete</button>
+              </div>
+            </div>
+          </div>
+          </div>
+          <br>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</div>

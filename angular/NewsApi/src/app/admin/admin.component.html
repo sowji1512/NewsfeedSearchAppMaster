@@ -1,0 +1,70 @@
+<app-adminnavbar></app-adminnavbar>
+<div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10 col-sm-10 mt-3">
+        <form class="card" [formGroup]="Myform" id="searchForm" (ngSubmit)="onSearch()">
+            <div class="card-body row no-gutters align-items-center">
+                <div class="col">
+                    <input class="form-control form-control-lg form-control-borderless" [(ngModel)]="searchAnalyst"
+                        id="search" formControlName="search" type="search" name="search"
+                        placeholder="Search analyst by Email">
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-lg btn-success" id="searchSubmit" [disabled]="Myform.get('search').errors"
+                        type="submit">Search</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div *ngIf="searchedAnalyst; else nosearchedAnalyst">
+    <div class="row justify-content-center mt-5">
+        <h2 class="mb-5">No Such Analyst</h2>
+    </div>
+</div>
+
+
+<ng-template #nosearchedAnalyst>
+    <div class="row justify-content-center">
+        <div class="col-lg-10 col-md-8 col-xs-8 mt-4">
+            <h2 class="row justify-content-center mb-5"> NewsAnalysts Details</h2>
+             <div class="container-fluid">
+                <div class="row   mt-4">
+                    <div class="col-lg-4 mb-3 my-2" *ngFor="let analyst of newsAnalyst | filter : searchAnalyst : 'email'  ;let i=index">
+                        <div class="card">
+                            <div class="card ">
+                                <h4 class="card-header">{{i+1}}</h4>
+                                <div class="card-body">
+                                        <img class="card-img-top" id="imag" src= "./assets/avatar.png" alt="loading" height="180" width="10">  
+
+                                    <div class="card-title row justify-content-center">
+                                        <h5> {{analyst.name}}</h5>
+                                    </div>
+                                    <div class="card-text row justify-content-center"><b><label>Email:-
+                                            </label></b>{{analyst.email}}</div>
+                                </div>
+                                <div class="card-footer"  id="footer">
+                                    <div class="row justify-content-center">
+                                        <div *ngIf="analyst.activeStatus">
+                                            <button class="btn btn-danger" style="float: center;" id="{{analyst.id}}"
+                                                (click)="blackAnalyst(analyst.id)"><i class="fa fa-ban"></i> Block
+                                            </button>
+                                        </div>
+                                        <div *ngIf="!analyst.activeStatus">
+                                            <button class="btn btn-success" style="float: center;"
+                                                (click)="reactivateAnalyst(analyst.id)">
+                                                <i class="fa fa-unlock"></i> Reactivate</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</ng-template>

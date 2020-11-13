@@ -1,0 +1,107 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-info  static-top">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="assets/news.png" width="100px" height="40px" alt="">
+        </a>
+        <a class="navbar-brand" href="#">
+            <h4>NEWSAPI</h4>
+        </a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+            aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" routerLink="/news">
+                        <h5><i class="fa fa-home"></i> Home</h5>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/searchHistory" id="searchhistory">
+                        <h5><i class="fa fa-search"></i> Search History</h5>
+                    </a>
+                </li>
+               
+                <li class="nav-item">
+                    <a class="nav-link" style="cursor:pointer" (click)="logout()">
+                        <h5><i class="fa fa-sign-out"></i> Logout</h5>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+
+<div class="row justify-content-center ">
+    <div class="col-lg-8 col-md-10 col-sm-10 mt-4">
+        <form class="card" [formGroup]="form" (ngSubmit)="onSearch()">
+            <div class="card-body row no-gutters align-items-center">
+                <div class="col">
+                    <input class="form-control form-control-lg form-control-borderless" id="search"
+                        formControlName="search" type="search" name="search" placeholder="Search topics or keywords">
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-lg btn-success" id="searchSubmit" [disabled]="form.get('search').errors"
+                        type="submit">Search</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<br />
+
+
+<div class="jumbotron">
+    <div *ngIf="articlesNotFound; else articlesFound">
+        <div class="row justify-content-center mb-5">
+            <h2> Articles Not Found</h2>
+        </div>
+    </div>
+
+    <ng-template #articlesFound>
+        <h1 class="row justify-content-center">HeadLines</h1>
+        <div class="row">
+            <div *ngFor="let n of news" class="card col-lg-4 col-md-3 my-2">
+
+                <h4 class="card-header">{{n.title}}</h4>
+
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted" style="float: right;">{{n.source.name}}</h6>
+                    <img class="card-img-top" id="imag" src={{n.urlToImage}} alt="loading">
+                    <div class="card-body">
+                        <p>{{n.description}}</p>
+                    </div>
+                    <div class="card-link">
+                    <p style="float: right;"><span class="fa fa-calendar-check-o"></span>{{n.publishedAt|date}}</p>
+                </div>
+            </div>
+
+
+                <div class="card-footer">
+                    <a class="card-link">
+                    <span class="fa fa-heart fa-2x"  (click)="addToFavourite(n)" style="cursor:pointer;"></span>
+                    </a>
+                    <a class="card-link">
+                    <span class="fa fa-bookmark-o fa-2x"  (click)="addToBookmark(n)" style="cursor:pointer;"></span>
+                </a>
+            
+                    <a href={{n.url}} class="btn btn-primary" style="float: right;"><i class="fa fa-eye"
+                            style="font-size:18px"></i>
+                        Read More</a>
+                      
+                       
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+</div>

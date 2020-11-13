@@ -1,0 +1,27 @@
+<app-adminnavbar></app-adminnavbar>
+
+<div class="row justify-content-center">
+  <div class="col-lg-8 col-md-8 mt-4">
+    <h2 class="row justify-content-center mb-6"> NewsAnalysts Details</h2>
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Index</th>
+          <th>Analyst Email</th>
+          <th>Analyst Username</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let analyst of newsAnalyst let i=index">
+          <td>{{i+1}}</td>
+          <td>{{analyst.email}}</td>
+          <td>{{analyst.name}}</td>
+          <td><button class="btn btn-danger" [disabled]='analyst.activeStatus === false' (click)="blackAnalyst(analyst.id)">
+              Block Analyst</button>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
